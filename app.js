@@ -51,13 +51,16 @@ function create_chart_1(data) {
         ageData.push({ age: age, count: ageCounts[age] || 0 });
     }
     
+    // Step 2: Filter out any undefined values passed by a faulty dataset
     ageData = ageData.filter(d => d.age !== undefined);
     
+    // Step 3: Establish the variables used for the chart
     var svg = d3.select("#chart"),
         margin = { top: 50, right: 50, bottom: 70, left: 70 },
         width = +svg.attr("width") - margin.left - margin.right,
         height = +svg.attr("height") - margin.top - margin.bottom;
 
+    // Step 4: Build the x and y axes scales
     var xScale = d3.scaleBand()
         .range([0, width])
         .domain(ageData.map(d => d.age.toString()))
@@ -66,10 +69,11 @@ function create_chart_1(data) {
         .range([height, 0])
         .domain([0, d3.max(ageData, d => d.count)]);
 
+    // Step 5: Create the plane where the rendering of the bars takes place at margin
     var g = svg.append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // add bars to chart
+    // Step 6: Add bars to chart based on age data
     g.selectAll("rect")
         .data(ageData)
         .enter()
@@ -84,7 +88,7 @@ function create_chart_1(data) {
         .attr("y", d => yScale(d.count))
         .attr("height", d => height - yScale(d.count));
     
-    // Add hovering to bars
+    // Step 7: Add hovering tooltips to bars
     g.selectAll("rect")
     .on("mouseover", function(event, d) {
         d3.select(this)
@@ -120,7 +124,7 @@ function create_chart_1(data) {
 
     console.log(ageData);
 
-    // Add x-axis and y-axis
+    // Step 8: Add x-axis and y-axis
     const xAxis = d3.axisBottom(xScale)
         .tickValues(xScale.domain().filter((d, i) => i % 5 === 0));
     const yAxis = d3.axisLeft(yScale);
@@ -132,14 +136,14 @@ function create_chart_1(data) {
     g.append("g")
         .call(yAxis);
 
-    // Add x-axis label
+    // Step 9: Add x-axis label
     svg.append("text")
         .attr("x", width / 2 + margin.left)
         .attr("y", height + margin.top + 40)
         .attr("text-anchor", "middle")
         .text("Age");
 
-    // Add y-axis label
+    // Step 10: Add y-axis label
     svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("x", (-height / 2) - margin.top)
