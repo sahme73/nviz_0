@@ -8,7 +8,7 @@
     <title>Narrative Visualization</title>
     <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="style.css">
-    <script src='https://d3js.org/d3.v5.min.js'></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
     <script type="text/javascript" src="app.js" type="module"></script>
 </head>
 
@@ -17,7 +17,15 @@
         Narrative Visualization
     </h1>
 
-    <button onclick="msg()">test</button>
+    <p>
+        The following data is on a random sample of 10,000 patients from across the United States of America.
+    </p>
+
+    <button id="b1" onclick="msg()">test</button>
+
+    <div>
+        <svg id="chart" width="1200" height="500"></svg>
+    </div>
 </body>
 
 </html>

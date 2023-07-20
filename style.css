@@ -6,3 +6,11 @@ body {
 h1 {
     color: black;
 }
+
+button {
+    font-family: inherit;
+}
+
+.bar {
+    fill: steelblue;
+}
