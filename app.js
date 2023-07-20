@@ -130,14 +130,17 @@ function create_chart_1(data) {
     const yAxis = d3.axisLeft(yScale);
 
     g.append("g")
+        .attr("class", "tick")
         .attr("transform", `translate(0, ${height})`)
         .call(xAxis);
 
     g.append("g")
+        .attr("class", "tick")
         .call(yAxis);
 
     // Step 9: Add x-axis label
     svg.append("text")
+        .attr("class", "axis-label")
         .attr("x", width / 2 + margin.left)
         .attr("y", height + margin.top + 40)
         .attr("text-anchor", "middle")
@@ -145,6 +148,7 @@ function create_chart_1(data) {
 
     // Step 10: Add y-axis label
     svg.append("text")
+        .attr("class", "axis-label")
         .attr("transform", "rotate(-90)")
         .attr("x", (-height / 2) - margin.top)
         .attr("y", margin.left - 40)

@@ -14,3 +14,11 @@ button {
 .bar {
     fill: steelblue;
 }
+
+.tick {
+    user-select: none;
+}
+
+.axis-label {
+    user-select: none;
+}
