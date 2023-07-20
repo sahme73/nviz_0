@@ -1,4 +1,4 @@
-window.data_status = "data missing";
+window.data_status = "data missing (loading)";
 
 function getGlobalStatus(key) {
     return window[key];
