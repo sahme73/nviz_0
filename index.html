@@ -12,13 +12,13 @@
     <script type="text/javascript" src="app.js" type="module"></script>
 </head>
 
-<body onload="init()">
+<header>
     <h1>
         Narrative Visualization
     </h1>
 
     <p id="global-annotation">
-        The following data is on a random sample of 10,000 hospital patients from across the United States of America in 2019.
+        undefined
     </p>
 
     <button id="b1" onclick="msg()">test</button>
@@ -32,8 +32,12 @@
     <button class="force" onclick="force(3)">3</button>
     <button class="force" onclick="force(4)">4</button>
     <button class="force" onclick="force(5)">5</button>
+</header>
 
-    <div id="chart-container"></div>
+<body onload="init()">
+    <div style="height:100%">
+        <svg id="chart-container"></svg>
+    </div>
 </body>
 
 </html>

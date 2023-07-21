@@ -109,11 +109,19 @@ async function init() {
 
 function create_chart_1(data) {
     // Step 0: Scale the SVG
-    d3.select("#chart-container")
+    var container = d3.select("#chart-container");
+    container
+        .attr("width", "100%")
+        .attr("height", "100%");
+
+    var containerWidth = parseInt(container.style("width"));
+    var containerHeight = parseInt(container.style("height"));
+
+    container
         .append("svg")
         .attr("id", "chart")
-        .attr("width", "900")
-        .attr("height", "900");
+        .attr("width", containerWidth)
+        .attr("height", containerHeight);
 
     // Step 1: Calculate the count of patients for each age group
     var ageCounts = {};
@@ -132,9 +140,10 @@ function create_chart_1(data) {
     
     // Step 3: Establish the variables used for the chart
     var svg = d3.select("#chart"),
-        margin = { top: 50, right: 50, bottom: 70, left: 70 },
-        width = +svg.attr("width") - margin.left - margin.right,
-        height = +svg.attr("height") - margin.top - margin.bottom;
+        margin = { top: (0.1 * containerHeight), right: (0.1 * containerWidth), 
+                   bottom: (0.1 * containerHeight), left: (0.1 * containerWidth) },
+        width = containerWidth - margin.left - margin.right,
+        height = containerHeight - margin.top - margin.bottom;
 
     // Step 4: Build the x and y axes scales
     var xScale = d3.scaleBand()
