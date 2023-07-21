@@ -11,6 +11,11 @@ button {
     font-family: inherit;
 }
 
+.force {
+    pointer-events: none;
+    opacity: 50%;
+}
+
 .bar {
     fill: steelblue;
 }

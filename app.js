@@ -1,4 +1,6 @@
-window.data_status = "data missing (loading)";
+window.data = null;
+window.data_status = "Data Missing (Loading...)";
+window.chart_number = 1;
 
 function getGlobalStatus(key) {
     return window[key];
@@ -12,29 +14,88 @@ function msg() {
     alert(getGlobalStatus("data_status"));
 }
 
+function prev_chart() {
+    var curr_chart_num = getGlobalStatus("chart_number");
+    if (curr_chart_num != 1) {
+        // update chart number
+        setGlobalStatus("chart_number", getGlobalStatus("chart_number") - 1);
+        document.getElementById("b4").innerText = "Current Chart: " + getGlobalStatus("chart_number");
+
+        // modify displayed chart
+        update_chart();
+    }
+}
+
+function next_chart() {
+    var curr_chart_num = getGlobalStatus("chart_number");
+    if (curr_chart_num != 5) {
+        // update chart number
+        setGlobalStatus("chart_number", getGlobalStatus("chart_number") + 1);
+        document.getElementById("b4").innerText = "Current Chart: " + getGlobalStatus("chart_number");
+
+        // modify displayed chart
+        update_chart();
+    }
+}
+
+function force(n) {
+    // update chart number
+    setGlobalStatus("chart_number", n);
+    document.getElementById("b4").innerText = "Current Chart: " + n;
+    update_chart();
+}
+
+function enable_force() {
+    elements = document.getElementsByClassName("force");
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].style.pointerEvents="all";
+        elements[i].style.opacity="100%";
+    }
+}
+
+function update_chart() {
+    d3.select("#chart")
+        .selectAll("*").remove();
+
+    var data = getGlobalStatus("data");
+    var curr_chart_num = getGlobalStatus("chart_number");
+
+    if (curr_chart_num == 1) {
+        create_chart_1(data);
+    }
+}
+
 async function init() {
     // check if d3 dependency met
     console.log(d3);
 
     // load the data
     document.getElementById("b1").innerText = getGlobalStatus("data_status");
-    console.log("loading data...");
+    console.log("Loading data...");
     var load_start = Date.now();
     const data = await d3.csv("10k_sample.csv");
     var load_end = Date.now();
     if (data) {
-        console.log("data loaded!");
-        setGlobalStatus("data_status", "data loaded");
+        console.log("Data loaded!");
+        setGlobalStatus("data_status", "Data Loaded");
     } else {
-        console.log("data empty!")
-        setGlobalStatus("data_status", "data failed");
+        console.log("Data empty!")
+        setGlobalStatus("data_status", "Data Failed");
     }
     document.getElementById("b1").innerText = `${getGlobalStatus("data_status")} (${(load_end - load_start)/1000} seconds)`;
 
     // verify that the data is loaded properly
     console.log(data);
 
-    /* basic bar chart (grouping patients by age) */
+    // store the data globally
+    setGlobalStatus("data", data);
+
+    // enable force buttons
+    enable_force();
+
+    // update
+    update_chart();
+
     create_chart_1(data);
 }
 

@@ -18,13 +18,23 @@
     </h1>
 
     <p>
-        The following data is on a random sample of 10,000 patients from across the United States of America.
+        The following data is on a random sample of 10,000 hospital patients from across the United States of America in 2019.
     </p>
 
     <button id="b1" onclick="msg()">test</button>
+    <br>
+    <button class="force" id="b2" onclick="prev_chart()"><</button>
+    <button class="force" id="b3" onclick="next_chart()">></button>
+    <button class="force" id="b4">Current Chart: 1</button>
+    <br>
+    <button class="force" onclick="force(1)">1</button>
+    <button class="force" onclick="force(2)">2</button>
+    <button class="force" onclick="force(3)">3</button>
+    <button class="force" onclick="force(4)">4</button>
+    <button class="force" onclick="force(5)">5</button>
 
     <div>
-        <svg id="chart" width="1200" height="500"></svg>
+        <svg id="chart" width="1880" height="760"></svg>
     </div>
 </body>
 
