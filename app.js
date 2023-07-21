@@ -1,6 +1,7 @@
 window.data = null;
 window.data_status = "Data Missing (Loading...)";
 window.chart_number = 1;
+window.global_annotations = null;
 
 function getGlobalStatus(key) {
     return window[key];
@@ -54,7 +55,10 @@ function enable_force() {
 }
 
 function update_chart() {
-    d3.select("#chart")
+    // first update the global annotation
+    document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(getGlobalStatus("chart_number"));
+
+    d3.select("#chart-container")
         .selectAll("*").remove();
 
     var data = getGlobalStatus("data");
@@ -66,6 +70,12 @@ function update_chart() {
 }
 
 async function init() {
+    // create basic main annotations per chart
+    const global_annotations = new Map();
+    global_annotations.set(1, "The following data is on a random sample of 10,000 hospital patients from across the United States of America in 2019.");
+
+    setGlobalStatus("global_annotations", global_annotations);
+
     // check if d3 dependency met
     console.log(d3);
 
@@ -95,11 +105,16 @@ async function init() {
 
     // update
     update_chart();
-
-    create_chart_1(data);
 }
 
 function create_chart_1(data) {
+    // Step 0: Scale the SVG
+    d3.select("#chart-container")
+        .append("svg")
+        .attr("id", "chart")
+        .attr("width", "900")
+        .attr("height", "900");
+
     // Step 1: Calculate the count of patients for each age group
     var ageCounts = {};
     data.forEach(patient => {
