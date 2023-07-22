@@ -58,14 +58,18 @@ function update_chart() {
     // first update the global annotation
     document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(getGlobalStatus("chart_number"));
 
+    // clear the current chart
     d3.select("#chart-container")
         .selectAll("*").remove();
 
+    // build the current chart
     var data = getGlobalStatus("data");
     var curr_chart_num = getGlobalStatus("chart_number");
 
     if (curr_chart_num == 1) {
         create_chart_1(data);
+    } else if (curr_chart_num == 2) {
+        create_chart_2(data);
     }
 }
 
@@ -73,6 +77,9 @@ async function init() {
     // create basic main annotations per chart
     const global_annotations = new Map();
     global_annotations.set(1, "The following data is on a random sample of 10,000 hospital patients from across the United States of America in 2019.");
+    global_annotations.set(2, "The chart below highlights the race distribution among the hospital patients throughout 2019.");
+    global_annotations.set(3, "The total distribution of patient sex.");
+    global_annotations.set(4, "Now that we know the patient demographics, begin analyzing patients with stroke appointments.");
 
     setGlobalStatus("global_annotations", global_annotations);
 
@@ -239,4 +246,21 @@ function create_chart_1(data) {
         .attr("y", margin.left - 40)
         .attr("text-anchor", "middle")
         .text("Number of Patients");
+}
+
+function create_chart_2(data) {
+    // Step 0: Scale the SVG
+    var container = d3.select("#chart-container");
+    container
+        .attr("width", "100%")
+        .attr("height", "100%");
+
+    var containerWidth = parseInt(container.style("width"));
+    var containerHeight = parseInt(container.style("height"));
+
+    container
+        .append("svg")
+        .attr("id", "chart")
+        .attr("width", containerWidth)
+        .attr("height", containerHeight);
 }
