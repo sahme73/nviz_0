@@ -82,6 +82,7 @@ async function init() {
     global_annotations.set(4, "Now that we know the patient demographics, begin analyzing patients with stroke appointments.");
 
     setGlobalStatus("global_annotations", global_annotations);
+    document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(getGlobalStatus("chart_number"));
 
     // check if d3 dependency met
     console.log(d3);
