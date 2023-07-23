@@ -111,13 +111,11 @@ function create_chart_1(data) {
 
         var mAge = d.age;
         var mCount = d.count;
-        var fAge = -1;
         var fCount = -1;
         g.selectAll(".female-bars")
             .filter(function(d_, i_) {
                 // filter returns the .female-bar objects that meet the conditional
                 if (d_.age === d.age) {
-                    fAge = d_.age;
                     fCount = d_.count;
                     return true;
                 }
@@ -232,16 +230,14 @@ function create_chart_1(data) {
             .attr("opacity", "100%")
             .attr("filter", "saturate(200%)");
 
-        var mAge = d.age;
-        var mCount = d.count;
-        var fAge = -1;
-        var fCount = -1;
+        var fAge = d.age;
+        var fCount = d.count;
+        var mCount = -1;
         g.selectAll(".male-bars")
             .filter(function(d_, i_) {
                 // filter returns the .female-bar objects that meet the conditional
                 if (d_.age === d.age) {
-                    fAge = d_.age;
-                    fCount = d_.count;
+                    mCount = d_.count;
                     return true;
                 }
             })
@@ -267,7 +263,7 @@ function create_chart_1(data) {
             .attr("opacity", "0%");
         //test
 
-        const age = mAge.toString();
+        const age = fAge.toString();
         const count = mCount + fCount;
         const tooltipGroup = g.append("g")
             .attr("class", "tooltip-group");
