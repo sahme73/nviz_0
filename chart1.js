@@ -30,7 +30,6 @@ function create_chart_1(data) {
             otherCounts[age] = (otherCounts[age] || 0) + 1;
         }
     });
-    console.log("Male: " + maleCounts[0] + " Female: " + femaleCounts[0] + " Other: " + otherCounts[0]);
     
     var ageData = [];
     var ageMaleData = [];
@@ -107,6 +106,7 @@ function create_chart_1(data) {
         d3.select(this)
             .transition()
             .duration(200)
+            .attr("opacity", "100%")
             .attr("filter", "saturate(200%)");
 
         var mAge = d.age;
@@ -124,6 +124,7 @@ function create_chart_1(data) {
             })
             .transition()
             .duration(200)
+            .attr("opacity", "100%")
             .attr("filter", "saturate(200%)");
 
         //test
@@ -149,7 +150,6 @@ function create_chart_1(data) {
 
         const age = mAge.toString();
         const count = mCount + fCount;
-        console.log("age: " + age + " fAge: " + fAge);
         const tooltipGroup = g.append("g")
             .attr("class", "tooltip-group");
         tooltipGroup.append("text")
@@ -185,6 +185,7 @@ function create_chart_1(data) {
         d3.select(this)
             .transition()
             .duration(200)
+            .attr("opacity", "100%")
             .attr("filter", "saturate(100%)");
 
         g.selectAll(".female-bars")
@@ -193,6 +194,7 @@ function create_chart_1(data) {
             })
             .transition()
             .duration(200)
+            .attr("opacity", "100%")
             .attr("filter", "saturate(100%)");
 
         //test
@@ -204,7 +206,8 @@ function create_chart_1(data) {
             })
             .transition()
             .duration(200)
-            .attr("opacity", "100%");
+            .attr("opacity", "100%")
+            .attr("filter", "saturate(100%)");
         g.selectAll(".female-bars")
             .filter(function(d_, i_) {
                 if (d_.age !== d.age) {
@@ -213,7 +216,8 @@ function create_chart_1(data) {
             })
             .transition()
             .duration(200)
-            .attr("opacity", "100%");
+            .attr("opacity", "100%")
+            .attr("filter", "saturate(100%)");
         //test
 
         g.select(".tooltip-group").remove();
@@ -225,6 +229,7 @@ function create_chart_1(data) {
         d3.select(this)
             .transition()
             .duration(200)
+            .attr("opacity", "100%")
             .attr("filter", "saturate(200%)");
 
         var mAge = d.age;
@@ -242,6 +247,7 @@ function create_chart_1(data) {
             })
             .transition()
             .duration(200)
+            .attr("opacity", "100%")
             .attr("filter", "saturate(200%)");
 
         //test
@@ -263,7 +269,6 @@ function create_chart_1(data) {
 
         const age = mAge.toString();
         const count = mCount + fCount;
-        console.log("age: " + age + " fAge: " + fAge);
         const tooltipGroup = g.append("g")
             .attr("class", "tooltip-group");
         tooltipGroup.append("text")
@@ -299,6 +304,7 @@ function create_chart_1(data) {
         d3.select(this)
             .transition()
             .duration(200)
+            .attr("opacity", "100%")
             .attr("filter", "saturate(100%)");
 
         g.selectAll(".male-bars")
@@ -307,6 +313,7 @@ function create_chart_1(data) {
             })
             .transition()
             .duration(200)
+            .attr("opacity", "100%")
             .attr("filter", "saturate(100%)");
 
         //test
@@ -318,7 +325,8 @@ function create_chart_1(data) {
             })
             .transition()
             .duration(200)
-            .attr("opacity", "100%");
+            .attr("opacity", "100%")
+            .attr("filter", "saturate(100%)");
         g.selectAll(".female-bars")
             .filter(function(d_, i_) {
                 if (d_.age !== d.age) {
@@ -327,13 +335,12 @@ function create_chart_1(data) {
             })
             .transition()
             .duration(200)
-            .attr("opacity", "100%");
+            .attr("opacity", "100%")
+            .attr("filter", "saturate(100%)");
         //test
 
         g.select(".tooltip-group").remove();
     });
-
-    console.log(ageData);
 
     // Step 8: Add x-axis and y-axis
     const xAxis = d3.axisBottom(xScale)
