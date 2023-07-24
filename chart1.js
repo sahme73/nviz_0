@@ -54,6 +54,7 @@ function create_chart_1(data) {
                    bottom: (0.1 * containerHeight), left: (0.1 * containerWidth) },
         width = containerWidth - margin.left - margin.right,
         height = containerHeight - margin.top - margin.bottom;
+        svg.attr("pointer-events", "none");
 
     // Step 4: Build the x and y axes scales
     var xScale = d3.scaleBand()
@@ -253,6 +254,8 @@ function create_chart_1(data) {
                     return true;
                 }
             })
+            .transition()
+            .duration(200)
             .attr("opacity", "0%");
         g.selectAll(".female-bars")
             .filter(function(d_, i_) {
@@ -260,6 +263,8 @@ function create_chart_1(data) {
                     return true;
                 }
             })
+            .transition()
+            .duration(200)
             .attr("opacity", "0%");
         //test
 
