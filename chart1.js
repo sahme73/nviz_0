@@ -8,6 +8,10 @@ function create_chart_1(data) {
     var containerWidth = parseInt(container.style("width"));
     var containerHeight = parseInt(container.style("height"));
 
+    // maintain aspect ratio
+    container.attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`)
+        .attr("preserveAspectRatio", "xMinYMin");
+
     container
         .append("svg")
         .attr("id", "chart")
@@ -138,7 +142,7 @@ function create_chart_1(data) {
             })
             .transition()
             .duration(200)
-            .attr("opacity", "0%");
+            .attr("opacity", "25%");
         g.selectAll(".female-bars")
             .filter(function(d_, i_) {
                 if (d_.age !== d.age) {
@@ -147,7 +151,7 @@ function create_chart_1(data) {
             })
             .transition()
             .duration(200)
-            .attr("opacity", "0%");
+            .attr("opacity", "25%");
         //test
 
         const age = mAge.toString();
@@ -259,7 +263,7 @@ function create_chart_1(data) {
             })
             .transition()
             .duration(200)
-            .attr("opacity", "0%");
+            .attr("opacity", "25%");
         g.selectAll(".female-bars")
             .filter(function(d_, i_) {
                 if (d_.age !== d.age) {
@@ -268,7 +272,7 @@ function create_chart_1(data) {
             })
             .transition()
             .duration(200)
-            .attr("opacity", "0%");
+            .attr("opacity", "25%");
         //test
 
         const age = fAge.toString();

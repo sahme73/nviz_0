@@ -1,6 +1,6 @@
 window.data = null;
 window.data_status = "Data Missing (Loading...)";
-window.chart_number = 1 ; // reset to 1
+window.chart_number = 1; // reset to 1
 window.global_annotations = null;
 
 function getGlobalStatus(key) {

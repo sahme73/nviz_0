@@ -64,6 +64,10 @@ function create_chart_2(data) {
     var containerWidth = parseInt(container.style("width"));
     var containerHeight = parseInt(container.style("height"));
 
+    // maintain aspect ratio
+    container.attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`)
+        .attr("preserveAspectRatio", "xMinYMin");
+
     var svg = d3.select("#chart-container"),
     margin = { top: (0.1 * containerHeight), right: (0.1 * containerWidth), 
                 bottom: (0.1 * containerHeight), left: (0.1 * containerWidth) },
@@ -224,7 +228,7 @@ function create_chart_2(data) {
             return yScale(raceData1[i].percentage + raceData2[i].percentage + raceData3[i].percentage + raceData4[i].percentage + raceData5[i].percentage + raceData6[i].percentage);
         });
 
-    var animDuration = 5000;
+    var animDuration = 1000;
     //race = 1
     g.append("path")
         .datum(raceData1)
@@ -325,8 +329,25 @@ function create_chart_2(data) {
         .attr("stroke-width", 2);
 
     // adding hovering tool-tips for each area
+
+    // tool tip
+    // inspired by: https://dataviz.unhcr.org/tools/d3/d3_stacked_column_100perc_chart.html
+    var tooltip = d3.select("body")
+        .append("div")
+        .style("display", "inline")
+        .style("position", "fixed")
+        .style("z-index", "10")
+        .style("visibility", "hidden")
+        .text("a simple tooltip");
+
     g.selectAll("path")
         .on("mouseover", function(event, d) {
+
+            tooltip
+            .style("visibility", "visible")
+            .style("top", (event.pageY - 28) + "px")
+            .style("left", (event.pageX) + "px");
+
             d3.select(this)
                 .transition()
                 .duration(200)
@@ -344,7 +365,12 @@ function create_chart_2(data) {
                 })
                 .transition()
                 .duration(200)
-                .attr("opacity", "0%");
+                .attr("opacity", "10%");
+        })
+        .on("mousemove", function(event, d) {
+            tooltip
+                .style("top", (event.pageY - 28) + "px")
+                .style("left", (event.pageX) + "px");
         })
         .on("mouseout", function(event, d) {
             d3.select(this)
@@ -367,4 +393,28 @@ function create_chart_2(data) {
                 .attr("filter", "saturate(100%")
                 .attr("opacity", "100%");
         })
+        .on("mouseleave", function(event, d) {
+            tooltip.style("visibility", "hidden");
+        });
+
+    // set legend (work in progress)
+    svg.append("rect")
+        .attr("width", 50) //adjust later
+        .attr("height", 50)
+        .style("fill", "#18375F")
+        .attr("transform", `translate(${margin.left + width - 100}, ${margin.top + height - 100})`);
+
+    /**
+     * @TODO
+     * Chart 1: add annotations highlighting the majority of patients as 0 and 90
+     * Chart 2: finish the legend, add race and another statistic to the tooltip, add annotation highlighting lack of purple
+     * Chart 3: create and finish in one sitting
+     * 
+     * Chart 4: scatter plot or some cool other plot from d3 gallery to showcase age and stroke (/whatever disease to easily highlight)
+     *              -include race as color (maintain consistency!)
+     * Chart 5: scatter plot or some cool other plot from d3 gallery to showcase death rate
+     * Chart 6: (if time permits)
+     * 
+     * Essay: verify definition understanding and fully explain all details/features of the project
+     */
 }
