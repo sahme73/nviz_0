@@ -83,7 +83,10 @@ function create_chart_1(data) {
         .transition()
         .duration(1000)
         .attr("y", function(d) { return yScale(d.count); })
-        .attr("height", d => height - yScale(d.count));
+        .attr("height", d => height - yScale(d.count))
+        .on("end", function() {
+            svg.attr("pointer-events", "all");
+        });
     g.selectAll(".female-bars")
         .data(ageFemaleData)
         .enter()
