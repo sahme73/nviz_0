@@ -1,4 +1,4 @@
-// this will be a bar chart of male vs females with https://jsfiddle.net/amp42fjn/ as a reference
+// this will be a pie chart of male vs females with https://jsfiddle.net/amp42fjn/ as a reference
 function create_chart_2(data) {
     var overall = 0;
     var totals = [0, 0, 0]; // male | female | other

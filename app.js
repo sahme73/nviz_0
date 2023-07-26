@@ -58,6 +58,9 @@ function update_chart() {
     // first update the global annotation
     document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(getGlobalStatus("chart_number"));
 
+    // update chart number
+    document.getElementById("b4").innerText = "Current Chart: " + getGlobalStatus("chart_number");
+
     // clear the current chart
     d3.select("#chart-container")
         .selectAll("*").remove();
@@ -72,6 +75,8 @@ function update_chart() {
         create_chart_2(data);
     } else if (curr_chart_num == 3) {
         create_chart_3(data);
+    } else if (curr_chart_num == 4) {
+        create_chart_4(data);
     }
 }
 

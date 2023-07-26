@@ -333,7 +333,7 @@ function create_chart_3(data) {
 
     // adding hovering tool-tips for each area
 
-    // tool tip
+    // tooltip
     // inspired by: https://dataviz.unhcr.org/tools/d3/d3_stacked_column_100perc_chart.html | UNHCR
     var tooltip = d3.select("body")
         .append("div")
@@ -415,7 +415,7 @@ function create_chart_3(data) {
             tooltip.style("visibility", "hidden");
         });
 
-    // set legend (work in progress)
+    // set legend (done)
     var legend = svg.append("g")
         .attr("transform", `translate(${margin.left + width - 200}, ${margin.top + height - 300})`);
     
@@ -527,6 +527,7 @@ function create_chart_3(data) {
      * Chart 1: add annotations highlighting the majority of patients as 0 and 90
      * Chart 2: add annotation highlighting near equal distribution overall
      * Chart 3: add annotation highlighting lack of native american representation
+     *          add grids for easier reading to charts 1 and 3
      * 
      * Chart 4: scatter plot or some cool other plot from d3 gallery to showcase age and stroke (/whatever disease to easily highlight)
      *              -include race as color (maintain consistency!)
