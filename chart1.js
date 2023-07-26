@@ -380,4 +380,42 @@ function create_chart_1(data) {
         .attr("y", margin.left - 40)
         .attr("text-anchor", "middle")
         .text("Number of Patients");
+
+    // Step 11: Legend
+    var legend = svg.append("g")
+        .attr("transform", `translate(${margin.left + width - 148}, ${margin.top})`);
+
+    legend
+        .append("rect")
+        .classed("legend", true)
+        .attr("width", 150)
+        .attr("height", 100)
+        .style("fill", "white") // adjust
+        .style("stroke", "black");
+
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", "steelblue")
+        .attr("transform", `translate(${10}, ${10})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Male")
+        .attr("transform", `translate(${35}, ${26})`);
+
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", "pink")
+        .attr("transform", `translate(${10}, ${40})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Female")
+        .attr("transform", `translate(${35}, ${56})`);
 }

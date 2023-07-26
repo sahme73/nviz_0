@@ -231,7 +231,7 @@ function create_chart_3(data) {
             return yScale(raceData1[i].percentage + raceData2[i].percentage + raceData3[i].percentage + raceData4[i].percentage + raceData5[i].percentage + raceData6[i].percentage);
         });
 
-    var animDuration = 1000;
+    var animDuration = 5000;
     //race = 1
     g.append("path")
         .datum(raceData1)
@@ -341,19 +341,29 @@ function create_chart_3(data) {
         .style("position", "fixed")
         .style("z-index", "10")
         .style("visibility", "hidden")
-        .text("a simple tooltip");
+        .text("");
 
     g.selectAll("path")
         .on("mouseover", function(event, d) {
             if (d != null) {
-                console.log(d[0].race);
-                console.log(totals[parseInt(d[0].race)]);
-                tooltip.text(`Total: ${totals[parseInt(d[0].race)]}`);
+                if (d[0].race == 1) {
+                    tooltip.html(`Race: White <br> Total: ${totals[parseInt(d[0].race)]} <br> Percentage: ${totals[parseInt(d[0].race)] / 100}%`);
+                } else if (d[0].race == 2) {
+                    tooltip.html(`Race: Black <br> Total: ${totals[parseInt(d[0].race)]} <br> Percentage: ${totals[parseInt(d[0].race)] / 100}%`);
+                } else if (d[0].race == 3) {
+                    tooltip.html(`Race: Hispanic <br> Total: ${totals[parseInt(d[0].race)]} <br> Percentage: ${totals[parseInt(d[0].race)] / 100}%`);
+                } else if (d[0].race == 4) {
+                    tooltip.html(`Race: Asian or Pacific Islander <br> Total: ${totals[parseInt(d[0].race)]} <br> Percentage: ${totals[parseInt(d[0].race)] / 100}%`);
+                } else if (d[0].race == 5) {
+                    tooltip.html(`Race: Native American <br> Total: ${totals[parseInt(d[0].race)]} <br> Percentage: ${totals[parseInt(d[0].race)] / 100}%`);
+                } else if (d[0].race == 6) {
+                    tooltip.html(`Race: Other <br> Total: ${totals[parseInt(d[0].race)]} <br> Percentage: ${totals[parseInt(d[0].race)] / 100}%`);
+                } 
             }
 
             tooltip
             .style("visibility", "visible")
-            .style("top", (event.pageY - 28) + "px")
+            .style("top", (event.pageY - 64) + "px")
             .style("left", (event.pageX) + "px");
 
             d3.select(this)
@@ -377,7 +387,7 @@ function create_chart_3(data) {
         })
         .on("mousemove", function(event, d) {
             tooltip
-                .style("top", (event.pageY - 28) + "px")
+                .style("top", (event.pageY - 64) + "px")
                 .style("left", (event.pageX) + "px");
         })
         .on("mouseout", function(event, d) {
@@ -406,17 +416,117 @@ function create_chart_3(data) {
         });
 
     // set legend (work in progress)
-    svg.append("rect")
-        .attr("width", 50) //adjust later
-        .attr("height", 50)
-        .style("fill", "#18375F")
-        .attr("transform", `translate(${margin.left + width - 100}, ${margin.top + height - 100})`);
+    var legend = svg.append("g")
+        .attr("transform", `translate(${margin.left + width - 200}, ${margin.top + height - 300})`);
+    
+    legend
+        .append("rect")
+        .classed("legend", true)
+        .attr("width", 150)
+        .attr("height", 250)
+        .style("fill", "white")
+        .style("stroke", "black");
+
+    // 1
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", `${colorScale(1)}`)
+        .attr("fill-opacity", 0.6)
+        .attr("transform", `translate(${10}, ${10})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("White")
+        .attr("transform", `translate(${35}, ${26})`);
+
+    // 2
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", `${colorScale(2)}`)
+        .attr("fill-opacity", 0.6)
+        .attr("transform", `translate(${10}, ${40})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Black")
+        .attr("transform", `translate(${35}, ${56})`);
+
+    // 3
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", `${colorScale(3)}`)
+        .attr("fill-opacity", 0.6)
+        .attr("transform", `translate(${10}, ${70})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Hispanic")
+        .attr("transform", `translate(${35}, ${86})`);
+
+    // 4
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", `${colorScale(4)}`)
+        .attr("fill-opacity", 0.6)
+        .attr("transform", `translate(${10}, ${102})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Asian or")
+        .attr("transform", `translate(${35}, ${118})`);
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Pacific Islander")
+        .attr("transform", `translate(${35}, ${130})`);
+
+    // 5
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", `${colorScale(5)}`)
+        .attr("fill-opacity", 0.6)
+        .attr("transform", `translate(${10}, ${150})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Native American")
+        .attr("transform", `translate(${35}, ${166})`);
+
+    // 6
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", `${colorScale(6)}`)
+        .attr("fill-opacity", 0.6)
+        .attr("transform", `translate(${10}, ${180})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Other")
+        .attr("transform", `translate(${35}, ${196})`);
 
     /**
      * @TODO
      * Chart 1: add annotations highlighting the majority of patients as 0 and 90
-     * Chart 2: finish the legend, add race and another statistic to the tooltip, add annotation highlighting lack of purple
-     * Chart 3: create and finish in one sitting
+     * Chart 2: add annotation highlighting near equal distribution overall
+     * Chart 3: add annotation highlighting lack of native american representation
      * 
      * Chart 4: scatter plot or some cool other plot from d3 gallery to showcase age and stroke (/whatever disease to easily highlight)
      *              -include race as color (maintain consistency!)

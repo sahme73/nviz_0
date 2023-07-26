@@ -83,7 +83,6 @@ function create_chart_2(data) {
         tooltip.style("top", (event.pageY - 28) + "px")
             .style("left", (event.pageX) + "px");
         tooltip.text(`${d.value / overall * 100}%`);
-        console.log(d.value / overall);
     })
     .on("mouseout", function(event, d) {
         d3.select(this).attr("d", function(d) {
@@ -93,10 +92,51 @@ function create_chart_2(data) {
         tooltip.style("visibility", "hidden");
     });
 
-    /**
-     * @TODO
-     * -Add tooltip
-     * -Add title to middle of chart 2
-     * -Add legend to chart 1 and 2
-     */
+    // title
+    svg.append("text")
+        .attr("font-size", 32)
+        .text("Sex")
+        .attr("transform", `translate(${margin.left - 24}, ${margin.top - 26})`);
+    svg.append("text")
+        .attr("font-size", 32)
+        .text("Distribution")
+        .attr("transform", `translate(${margin.left - 84}, ${margin.top + 6})`);
+
+    // legend
+    var legend = svg.append("g")
+        .attr("transform", `translate(${containerWidth - 200}, ${0})`);
+
+    legend
+        .append("rect")
+        .classed("legend", true)
+        .attr("width", 150)
+        .attr("height", 100)
+        .style("fill", "white") // adjust
+        .style("stroke", "black");
+
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", "steelblue")
+        .attr("transform", `translate(${10}, ${10})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Male")
+        .attr("transform", `translate(${35}, ${26})`);
+
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", "pink")
+        .attr("transform", `translate(${10}, ${40})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Female")
+        .attr("transform", `translate(${35}, ${56})`);
 }
