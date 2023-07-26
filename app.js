@@ -77,6 +77,8 @@ function update_chart() {
         create_chart_3(data);
     } else if (curr_chart_num == 4) {
         create_chart_4(data);
+    } else if (curr_chart_num == 5) {
+        create_chart_5(data);
     }
 }
 
@@ -87,6 +89,7 @@ async function init() {
     global_annotations.set(2, "The total distribution of patient sex.");
     global_annotations.set(3, "The chart below highlights the race distribution among the hospital patients throughout 2019.");
     global_annotations.set(4, "Now that we know the patient demographics, begin analyzing patients with stroke appointments.");
+    global_annotations.set(5, "Now that we know the patient demographics, begin analyzing patients with stroke appointments.");
 
     setGlobalStatus("global_annotations", global_annotations);
     document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(getGlobalStatus("chart_number"));

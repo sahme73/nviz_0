@@ -1,5 +1,5 @@
 // inspired by: https://observablehq.com/@d3/density-contours?intent=fork
-function create_chart_4(data) {
+function create_chart_5(data) {
     // Data preprocessing
     // CIR021, CIR022, CIR024, CIR025
     var total = 0;
@@ -10,7 +10,7 @@ function create_chart_4(data) {
             patientInfo.DXCCSR_CIR024 != 0 ||
             patientInfo.DXCCSR_CIR025 != 0) {
             total += 1;
-            strokePatientsSeverity.push({ age: parseInt(patientInfo.AGE), aprdrg: parseInt(patientInfo.APRDRG), sex: parseInt(patientInfo.FEMALE) });
+            strokePatientsSeverity.push({ age: parseInt(patientInfo.AGE), aprdrg: parseInt(patientInfo.APRDRG), race: parseInt(patientInfo.RACE) });
         }
     });
     // APR: all patient refined
@@ -96,7 +96,7 @@ function create_chart_4(data) {
             .attr("d", d3.geoPath());
 
     // Append the dots
-    var colorScale = ["steelblue", "pink"]; // consistent
+    var colorScale = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"]; // consistent
 
     var dots = g.append("g")
             .attr("stroke", "white")
@@ -106,7 +106,7 @@ function create_chart_4(data) {
             .attr("cx", d => x(d.age))
             .attr("cy", d => y(d.aprdrg))
             .attr("r", 3.2)
-            .attr("fill", d => colorScale[d.sex]);
+            .attr("fill", d => colorScale[d.race - 1]);
 
     // tooltip
     var tooltip = d3.select("body")
@@ -120,11 +120,19 @@ function create_chart_4(data) {
     dots
         .on("mouseover", function(event, d) {
             if (d != null) {
-                if (d.sex == 0) {
-                    tooltip.html(`Sex: Male <br> Severity: ${d.aprdrg} <br> Age: ${d.age}`);
-                } else if (d.sex == 1) {
-                    tooltip.html(`Sex: Female <br> Severity: ${d.aprdrg} <br> Age: ${d.age}`);
-                }
+                if (d.race == 1) {
+                    tooltip.html(`Race: White <br> Severity: ${d.aprdrg} <br> Age: ${d.age}`);
+                } else if (d.race == 2) {
+                    tooltip.html(`Race: Black <br> Severity: ${d.aprdrg} <br> Age: ${d.age}`);
+                } else if (d.race == 3) {
+                    tooltip.html(`Race: Hispanic <br> Severity: ${d.aprdrg} <br> Age: ${d.age}`);
+                } else if (d.race == 4) {
+                    tooltip.html(`Race: Asian or Pacific Islander <br> Severity: ${d.aprdrg} <br> Age: ${d.age}`);
+                } else if (d.race == 5) {
+                    tooltip.html(`Race: Native American <br> Severity: ${d.aprdrg} <br> Age: ${d.age}`);
+                } else if (d.race == 6) {
+                    tooltip.html(`Race: Other <br> Severity: ${d.aprdrg} <br> Age: ${d.age}`);
+                } 
             }
 
             tooltip
@@ -144,38 +152,101 @@ function create_chart_4(data) {
     // legend
     var legend = svg.append("g")
         .attr("transform", `translate(${margin.left + 50}, ${margin.top + 50})`);
-
+    
     legend
         .append("rect")
         .classed("legend", true)
         .attr("width", 150)
-        .attr("height", 100)
-        .style("fill", "white") // adjust
+        .attr("height", 250)
+        .style("fill", "white")
         .style("stroke", "black");
 
+    // 1
     legend
         .append("rect")
         .attr("width", 20)
         .attr("height", 20)
-        .style("fill", "steelblue")
+        .style("fill", `${colorScale[0]}`)
         .attr("transform", `translate(${10}, ${10})`);
 
     legend
         .append("text")
         .attr("font-size", 14)
-        .text("Male")
+        .text("White")
         .attr("transform", `translate(${35}, ${26})`);
 
+    // 2
     legend
         .append("rect")
         .attr("width", 20)
         .attr("height", 20)
-        .style("fill", "pink")
+        .style("fill", `${colorScale[1]}`)
         .attr("transform", `translate(${10}, ${40})`);
 
     legend
         .append("text")
         .attr("font-size", 14)
-        .text("Female")
+        .text("Black")
         .attr("transform", `translate(${35}, ${56})`);
+
+    // 3
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", `${colorScale[2]}`)
+        .attr("transform", `translate(${10}, ${70})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Hispanic")
+        .attr("transform", `translate(${35}, ${86})`);
+
+    // 4
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", `${colorScale[3]}`)
+        .attr("transform", `translate(${10}, ${102})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Asian or")
+        .attr("transform", `translate(${35}, ${118})`);
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Pacific Islander")
+        .attr("transform", `translate(${35}, ${130})`);
+
+    // 5
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", `${colorScale[4]}`)
+        .attr("transform", `translate(${10}, ${150})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Native American")
+        .attr("transform", `translate(${35}, ${166})`);
+
+    // 6
+    legend
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .style("fill", `${colorScale[5]}`)
+        .attr("transform", `translate(${10}, ${180})`);
+
+    legend
+        .append("text")
+        .attr("font-size", 14)
+        .text("Other")
+        .attr("transform", `translate(${35}, ${196})`);
 }

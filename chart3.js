@@ -433,7 +433,6 @@ function create_chart_3(data) {
         .attr("width", 20)
         .attr("height", 20)
         .style("fill", `${colorScale(1)}`)
-        .attr("fill-opacity", 0.6)
         .attr("transform", `translate(${10}, ${10})`);
 
     legend
@@ -448,7 +447,6 @@ function create_chart_3(data) {
         .attr("width", 20)
         .attr("height", 20)
         .style("fill", `${colorScale(2)}`)
-        .attr("fill-opacity", 0.6)
         .attr("transform", `translate(${10}, ${40})`);
 
     legend
@@ -463,7 +461,6 @@ function create_chart_3(data) {
         .attr("width", 20)
         .attr("height", 20)
         .style("fill", `${colorScale(3)}`)
-        .attr("fill-opacity", 0.6)
         .attr("transform", `translate(${10}, ${70})`);
 
     legend
@@ -478,7 +475,6 @@ function create_chart_3(data) {
         .attr("width", 20)
         .attr("height", 20)
         .style("fill", `${colorScale(4)}`)
-        .attr("fill-opacity", 0.6)
         .attr("transform", `translate(${10}, ${102})`);
 
     legend
@@ -498,7 +494,6 @@ function create_chart_3(data) {
         .attr("width", 20)
         .attr("height", 20)
         .style("fill", `${colorScale(5)}`)
-        .attr("fill-opacity", 0.6)
         .attr("transform", `translate(${10}, ${150})`);
 
     legend
@@ -513,7 +508,6 @@ function create_chart_3(data) {
         .attr("width", 20)
         .attr("height", 20)
         .style("fill", `${colorScale(6)}`)
-        .attr("fill-opacity", 0.6)
         .attr("transform", `translate(${10}, ${180})`);
 
     legend
@@ -525,14 +519,11 @@ function create_chart_3(data) {
     /**
      * @TODO
      * Chart 1: add annotations highlighting the majority of patients as 0 and 90
-     * Chart 2: add annotation highlighting near equal distribution overall
-     * Chart 3: add annotation highlighting lack of native american representation
+     * Chart 2: add annotations highlighting near equal distribution overall
+     * Chart 3: add annotations highlighting lack of native american representation
      *          add grids for easier reading to charts 1 and 3
      * 
-     * Chart 4: scatter plot or some cool other plot from d3 gallery to showcase age and stroke (/whatever disease to easily highlight)
-     *              -include race as color (maintain consistency!)
-     * Chart 5: scatter plot or some cool other plot from d3 gallery to showcase death rate
-     * Chart 6: (if time permits)
+     * Chart 4/5: add annotations
      * 
      * Essay: verify definition understanding and fully explain all details/features of the project
      */
