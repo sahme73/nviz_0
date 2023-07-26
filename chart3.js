@@ -13,7 +13,7 @@ function create_chart_3(data) {
      * Admission Month:
      * 1-12 = jan-dec
      */
-
+    const totals = [-1, 0, 0, 0, 0, 0, 0];
     const distribution = new Map(); //key: {month, race} | value: count
     for (var m = 1; m <= 12; m++) {
         for (var r = 1; r <= 6; r++) {
@@ -25,12 +25,15 @@ function create_chart_3(data) {
         const aptMonth = parseInt(patient.AMONTH);
         const race = parseInt(patient.RACE);
         if (isNaN(aptMonth) || isNaN(race)) {
+            totals[5] += 1;
             return;
         }
+        totals[race] += 1;
         var key = JSON.stringify({ month: aptMonth, race: race });
         distribution.set(key, (distribution.get(key) ?? 0) + 1);
     });
     console.log(distribution);
+    console.log(totals);
 
     // calculate the total patients per month
     const totalPatientsPerMonth = new Map();
@@ -342,7 +345,12 @@ function create_chart_3(data) {
 
     g.selectAll("path")
         .on("mouseover", function(event, d) {
-            console.log("hello world");
+            if (d != null) {
+                console.log(d[0].race);
+                console.log(totals[parseInt(d[0].race)]);
+                tooltip.text(`Total: ${totals[parseInt(d[0].race)]}`);
+            }
+
             tooltip
             .style("visibility", "visible")
             .style("top", (event.pageY - 28) + "px")

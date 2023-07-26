@@ -1,15 +1,19 @@
 // this will be a bar chart of male vs females with https://jsfiddle.net/amp42fjn/ as a reference
 function create_chart_2(data) {
+    var overall = 0;
     var totals = [0, 0, 0]; // male | female | other
     data.forEach(patient => {
         if (patient.FEMALE == 0) {
             totals[0] += 1;
+            overall++;
         } else if (patient.FEMALE == 1) {
             totals[1] += 1;
+            overall++;
         } else {
             totals[2] += 1;
+            overall++;
         }
-    })
+    });
     
     //
     var container = d3.select("#chart-container");
@@ -70,15 +74,23 @@ function create_chart_2(data) {
             return d3.arc().innerRadius(iRadius * 0.95)
                     .outerRadius(oRadius * 1.05)(d);
         })
+        tooltip.style("visibility", "visible")
+            .style("top", (event.pageY - 28) + "px")
+            .style("left", (event.pageX) + "px");
     })
     .on("mousemove", function(event, d) {
         //tooltip
+        tooltip.style("top", (event.pageY - 28) + "px")
+            .style("left", (event.pageX) + "px");
+        tooltip.text(`${d.value / overall * 100}%`);
+        console.log(d.value / overall);
     })
     .on("mouseout", function(event, d) {
         d3.select(this).attr("d", function(d) {
             return d3.arc().innerRadius(iRadius)
                     .outerRadius(oRadius)(d);
-        })
+        });
+        tooltip.style("visibility", "hidden");
     });
 
     /**
