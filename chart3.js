@@ -1,3 +1,6 @@
+window.width = 0;
+window.height = 0;
+
 function create_chart_3(data) {
     // Step 0: Calculate the percentage of race distrution based on month
 
@@ -76,6 +79,8 @@ function create_chart_3(data) {
                 bottom: (0.1 * containerHeight), left: (0.1 * containerWidth) },
     width = containerWidth - margin.left - margin.right,
     height = containerHeight - margin.top - margin.bottom;
+    window["width"] = width;
+    window["height"] = height;
     svg.attr("pointer-events", "none");
 
     //draw space
@@ -523,10 +528,6 @@ function create_chart_3(data) {
 
     /**
      * @TODO
-     * Chart 1: add annotations highlighting the majority of patients as 0 and 90
-     * Chart 2: add annotations highlighting near equal distribution overall
-     * Chart 3: add annotations highlighting lack of native american representation
-     *          add grids for easier reading to charts 1 and 3
      * 
      * Chart 4/5: add annotations
      * 
@@ -535,13 +536,17 @@ function create_chart_3(data) {
 }
 
 function chart3_annotation1() {
+    var w = window["width"];
+    var h = window["height"];
+    console.log("w: " + w + " h: " + h);
+
     const annotations = [
         {
             note: {
-                label: "Concerning race, the disparity is much larger. The majority of patients in the total 10,000 are White."
+                label: "Concerning race, the disparity is much larger. The majority of patients in the total 10,000 are white."
             },
-            x: 200,
-            y: 200,
+            x: (0.1956181533646322 * w),
+            y: (0.3571428571428571 * h),
             dy: 0,
             dx: 0
         },
@@ -549,10 +554,10 @@ function chart3_annotation1() {
             note: {
                 label: "Notice the extremely small percentage of Native American patients that is barely visible."
             },
-            x: 380,
-            y: 20,
-            dy: 100,
-            dx: 100
+            x: (0.3716744913928013 * w),
+            y: (0.0357142857142857 * h),
+            dy: (0.1785714285714286 * h),
+            dx: (0.0978090766823161 * w)
         }
     ]
     

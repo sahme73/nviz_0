@@ -1,3 +1,6 @@
+window.width = 0;
+window.height = 0;
+
 // inspired by: https://observablehq.com/@d3/density-contours?intent=fork
 function create_chart_4(data) {
     // Data preprocessing
@@ -33,6 +36,8 @@ function create_chart_4(data) {
                 bottom: (0.1 * containerHeight), left: (0.1 * containerWidth) },
     width = containerWidth - margin.left - margin.right,
     height = containerHeight - margin.top - margin.bottom;
+    window["width"] = width;
+    window["height"] = height;
 
     // Draw space
     var g = svg.append("g")
@@ -182,15 +187,27 @@ function create_chart_4(data) {
 }
 
 function chart4_annotation1() {
+    var w = window["width"];
+    var h = window["height"];
+
     const annotations = [
         {
             note: {
                 label: "The outliers outside the contoured section of the graph indicate that strokes can still affect younger patients."
             },
-            x: 100,
-            y: 250,
+            x: (0.0978090766823161 * w),
+            y: (0.4464285714285714 * h),
             dy: 0,
             dx: 0
+        },
+        {
+            note: {
+                label: "A noteworthy cluster is this group of males between ages 50 and 70 with more severe stroke hospitalizations."
+            },
+            x: (0.6455399061032864 * w),
+            y: (0.2678571428571429 * h),
+            dy: (0.0892857142857143 * h),
+            dx: (-0.2151799687010955 * w)
         }
     ]
     

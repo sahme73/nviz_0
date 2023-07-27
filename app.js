@@ -1,6 +1,6 @@
 window.data = null;
 window.data_status = "Data Missing (Loading...)";
-window.chart_number = 8; // reset to 1
+window.chart_number = 1; // reset to 1
 window.chart_list = [0, 1, 11, 2, 22, 3, 33, 4, 44, 5, 55, 6];
 window.global_annotations = null;
 
@@ -76,6 +76,16 @@ function update_chart() {
     // first update the global annotation
     if (curr_chart <= 6) {
         document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(curr_chart);
+    } else if (curr_chart == 11) {
+        document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(1);
+    } else if (curr_chart == 22) {
+        document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(2);
+    } else if (curr_chart == 33) {
+        document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(3);
+    } else if (curr_chart == 44) {
+        document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(4);
+    } else if (curr_chart == 55) {
+        document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(5);
     }
 
     // update chart number
@@ -130,7 +140,7 @@ async function init() {
     global_annotations.set(3, "The chart below highlights the race distribution among the hospital patients throughout 2019.");
     global_annotations.set(4, "Now that we know the patient demographics, begin analyzing patients with that were hospitalized with strokes with varying severity.");
     global_annotations.set(5, "Race is another possible factor that needs to be analyzed with respect to strokes and how severe they are.");
-    global_annotations.set(6, "Conclusion: Although the analysis conducted on the graphs emphasizes that the sample selection of 10,000 patients is biased in favor of white patients, the closer distribution of sexes gives some insight into whether or not biological sex heavily influences the severity of a stroke. The evident outcome, however, is that older patients have a much higher risk of having a stroke. Biological sex played some factor in the severity, as more males had more severe hospitalization cases at younger ages. Again, to better conclude a racial analysis, the sample of patients needs equaler distribution of races for proper analysis.");
+    global_annotations.set(6, "Conclusion: Although the analysis conducted on the graphs emphasizes that the sample selection of 10,000 patients is biased in favor of white patients, the closer distribution of sexes gives some insight into whether or not biological sex heavily influences the severity of a stroke. The evident outcome, however, is that older patients have a much higher risk of having a stroke. Biological sex played some factor in the severity, as more males had more severe hospitalization cases at younger ages. Again, to better conclude a racial analysis, the sample of patients needs equal distribution of races for proper analysis.");
 
     setGlobalStatus("global_annotations", global_annotations);
     document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(getGlobalStatus("chart_number"));

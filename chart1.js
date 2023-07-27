@@ -1,3 +1,6 @@
+window.width = 0;
+window.height = 0;
+
 function create_chart_1(data) {
     // Step 0: Scale the SVG
     var container = d3.select("#chart-container");
@@ -59,6 +62,8 @@ function create_chart_1(data) {
         width = containerWidth - margin.left - margin.right,
         height = containerHeight - margin.top - margin.bottom;
         svg.attr("pointer-events", "none");
+    window["width"] = width;
+    window["height"] = height;
 
     // Step 4: Build the x and y axes scales
     var xScale = d3.scaleBand()
@@ -427,19 +432,19 @@ function chart1_annotation1() {
             note: {
                 label: "Notice that the age with the most patients is zero."
             },
-            x: 14,
-            y: 2,
-            dy: 100,
-            dx: 100
+            x: (0.0136932707355243 * window["width"]),
+            y: (0.0035714285714286 * window["height"]),
+            dy: (0.1785714285714286 * window["height"]),
+            dx: (0.0978090766823161 * window["width"])
         },
         {
             note: {
                 label: "Both the minimum age and maximum age of the patient selection contain the highest counts."
             },
-            x: 1368,
-            y: 300,
-            dy: -30,
-            dx: -100
+            x: (0.9895833333333333 * window["width"]),
+            y: (0.5357142857142857 * window["height"]),
+            dy: (-0.0535714285714286 * window["height"]),
+            dx: (-0.0978090766823161 * window["width"])
         }
     ]
     

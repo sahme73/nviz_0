@@ -1,3 +1,6 @@
+window.width = 0;
+window.height = 0;
+
 // this will be a pie chart of male vs females with https://jsfiddle.net/amp42fjn/ as a reference
 function create_chart_2(data) {
     var overall = 0;
@@ -23,6 +26,8 @@ function create_chart_2(data) {
 
     var containerWidth = parseInt(container.style("width"));
     var containerHeight = parseInt(container.style("height"));
+    window["width"] = containerWidth;
+    window["height"] = containerHeight;
 
     // maintain aspect ratio
     container.attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`)
@@ -143,24 +148,27 @@ function create_chart_2(data) {
 }
 
 function chart2_annotation1() {
+    var w = window["width"];
+    var h = window["height"];
+
     const annotations = [
         {
             note: {
                 label: "The patients are not distributed exactly evenly split based on biological sex; however, the distribution is relatively even for a random sample of patients."
             },
             x: 0,
-            y: -200,
-            dy: 20,
-            dx: -250
+            y: (-0.2857142857142857 * h),
+            dy: (0.0285714285714286 * h),
+            dx: (-0.1956181533646322 * w)
         },
         {
             note: {
                 label: "The sample selection of patients does not include any hermaphrodites (individuals with two types of gonads)."
             },
-            x: 730,
-            y: -270,
-            dy: 20,
-            dx: -150
+            x: (0.4224537037037037 * w),
+            y: (-0.3857142857142857 * h),
+            dy: (0.0285714285714286 * h),
+            dx: (-0.1173708920187793 * w)
         }
     ]
     
