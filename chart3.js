@@ -25,7 +25,7 @@ function create_chart_3(data) {
         const aptMonth = parseInt(patient.AMONTH);
         const race = parseInt(patient.RACE);
         if (isNaN(aptMonth) || isNaN(race)) {
-            totals[5] += 1;
+            totals[6] += 1;
             return;
         }
         totals[race] += 1;
@@ -80,6 +80,7 @@ function create_chart_3(data) {
 
     //draw space
     var g = svg.append("g")
+        .classed("base", true)
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
     //x and y scales
@@ -374,11 +375,13 @@ function create_chart_3(data) {
 
             d3.selectAll("path")
                 .filter((d_, i_) => {
-                    if (d_ !== null && d !== null) {
+                    try {
                         if (d_[0].race !== d[0].race) {
                             return true;
                         }
                         return false;
+                    } catch (error) {
+                        return false
                     }
                 })
                 .transition()
@@ -399,11 +402,13 @@ function create_chart_3(data) {
 
             d3.selectAll("path")
                 .filter((d_, i_) => {
-                    if (d_ !== null && d !== null) {
+                    try {
                         if (d_[0].race !== d[0].race) {
                             return true;
                         }
                         return false;
+                    } catch (error) {
+                        return false
                     }
                 })
                 .transition()
@@ -527,4 +532,35 @@ function create_chart_3(data) {
      * 
      * Essay: verify definition understanding and fully explain all details/features of the project
      */
+}
+
+function chart3_annotation1() {
+    const annotations = [
+        {
+            note: {
+                label: "Concerning race, the disparity is much larger. The majority of patients in the total 10,000 are White."
+            },
+            x: 200,
+            y: 200,
+            dy: 0,
+            dx: 0
+        },
+        {
+            note: {
+                label: "Notice the extremely small percentage of Native American patients that is barely visible."
+            },
+            x: 380,
+            y: 20,
+            dy: 100,
+            dx: 100
+        }
+    ]
+    
+    const makeAnnotations = d3.annotation()
+        .annotations(annotations);
+
+    d3.select(".base")
+        .append("g")
+        .classed("annotation-group", true)
+        .call(makeAnnotations);
 }

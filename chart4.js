@@ -36,6 +36,7 @@ function create_chart_4(data) {
 
     // Draw space
     var g = svg.append("g")
+        .classed("base", true)
         .attr("transform", `translate(${margin.left},${margin.top})`);
     
     // Create the horizontal and vertical scales
@@ -178,4 +179,26 @@ function create_chart_4(data) {
         .attr("font-size", 14)
         .text("Female")
         .attr("transform", `translate(${35}, ${56})`);
+}
+
+function chart4_annotation1() {
+    const annotations = [
+        {
+            note: {
+                label: "The outliers outside the contoured section of the graph indicate that strokes can still affect younger patients."
+            },
+            x: 100,
+            y: 250,
+            dy: 0,
+            dx: 0
+        }
+    ]
+    
+    const makeAnnotations = d3.annotation()
+        .annotations(annotations);
+
+    d3.select(".base")
+        .append("g")
+        .classed("annotation-group", true)
+        .call(makeAnnotations);
 }

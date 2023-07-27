@@ -71,6 +71,7 @@ function create_chart_1(data) {
 
     // Step 5: Create the plane where the rendering of the bars takes place at margin
     var g = svg.append("g")
+        .classed("base", true)
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
     // Step 6: Add bars to chart based on age data
@@ -418,4 +419,35 @@ function create_chart_1(data) {
         .attr("font-size", 14)
         .text("Female")
         .attr("transform", `translate(${35}, ${56})`);
+}
+
+function chart1_annotation1() {
+    const annotations = [
+        {
+            note: {
+                label: "Notice that the age with the most patients is zero."
+            },
+            x: 14,
+            y: 2,
+            dy: 100,
+            dx: 100
+        },
+        {
+            note: {
+                label: "Both the minimum age and maximum age of the patient selection contain the highest counts."
+            },
+            x: 1368,
+            y: 300,
+            dy: -30,
+            dx: -100
+        }
+    ]
+    
+    const makeAnnotations = d3.annotation()
+        .annotations(annotations);
+
+    d3.select(".base")
+        .append("g")
+        .classed("annotation-group", true)
+        .call(makeAnnotations);
 }

@@ -1,6 +1,7 @@
 window.data = null;
 window.data_status = "Data Missing (Loading...)";
-window.chart_number = 1; // reset to 1
+window.chart_number = 8; // reset to 1
+window.chart_list = [0, 1, 11, 2, 22, 3, 33, 4, 44, 5, 55, 6];
 window.global_annotations = null;
 
 function getGlobalStatus(key) {
@@ -17,10 +18,10 @@ function msg() {
 
 function prev_chart() {
     var curr_chart_num = getGlobalStatus("chart_number");
+    
     if (curr_chart_num != 1) {
         // update chart number
         setGlobalStatus("chart_number", getGlobalStatus("chart_number") - 1);
-        document.getElementById("b4").innerText = "Current Chart: " + getGlobalStatus("chart_number");
 
         // modify displayed chart
         update_chart();
@@ -29,10 +30,10 @@ function prev_chart() {
 
 function next_chart() {
     var curr_chart_num = getGlobalStatus("chart_number");
-    if (curr_chart_num != 5) {
+
+    if (curr_chart_num != 11) {
         // update chart number
         setGlobalStatus("chart_number", getGlobalStatus("chart_number") + 1);
-        document.getElementById("b4").innerText = "Current Chart: " + getGlobalStatus("chart_number");
 
         // modify displayed chart
         update_chart();
@@ -41,8 +42,20 @@ function next_chart() {
 
 function force(n) {
     // update chart number
-    setGlobalStatus("chart_number", n);
-    document.getElementById("b4").innerText = "Current Chart: " + n;
+    if (n == 1) {
+        setGlobalStatus("chart_number", 1);
+    } else if (n == 2) {
+        setGlobalStatus("chart_number", 3);
+    } else if (n == 3) {
+        setGlobalStatus("chart_number", 5);
+    } else if (n == 4) {
+        setGlobalStatus("chart_number", 7);
+    } else if (n == 5) {
+        setGlobalStatus("chart_number", 9);
+    } else if (n == 6) {
+        setGlobalStatus("chart_number", 11);
+    }
+    
     update_chart();
 }
 
@@ -55,41 +68,69 @@ function enable_force() {
 }
 
 function update_chart() {
+    var curr_chart_num = getGlobalStatus("chart_number");
+    var curr_chart_list = getGlobalStatus("chart_list");
+    var curr_chart = curr_chart_list[curr_chart_num];
+    console.log("curr_chart is: " + curr_chart);
+
     // first update the global annotation
-    document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(getGlobalStatus("chart_number"));
+    if (curr_chart <= 6) {
+        document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(curr_chart);
+    }
 
     // update chart number
-    document.getElementById("b4").innerText = "Current Chart: " + getGlobalStatus("chart_number");
+    if (curr_chart != 6 && curr_chart != 11 && curr_chart != 22 && curr_chart != 33 && curr_chart != 44 && curr_chart != 55) {
+        document.getElementById("b4").innerText = "Current Chart: " + curr_chart;
+    } else if (curr_chart == 6) {
+        document.getElementById("b4").innerText = "Conclusion";
+    }
 
     // clear the current chart
     d3.select("#chart-container")
         .selectAll("*").remove();
+    d3.selectAll(".annotation-group")
+        .remove();
 
     // build the current chart
     var data = getGlobalStatus("data");
-    var curr_chart_num = getGlobalStatus("chart_number");
 
-    if (curr_chart_num == 1) {
+    if (curr_chart == 1) {
         create_chart_1(data);
-    } else if (curr_chart_num == 2) {
+    } else if (curr_chart == 11) {
+        create_chart_1(data);
+        chart1_annotation1();
+    } else if (curr_chart == 2) {
         create_chart_2(data);
-    } else if (curr_chart_num == 3) {
+    } else if (curr_chart == 22) {
+        create_chart_2(data);
+        chart2_annotation1();
+    } else if (curr_chart == 3) {
         create_chart_3(data);
-    } else if (curr_chart_num == 4) {
+    } else if (curr_chart == 33) {
+        create_chart_3(data);
+        chart3_annotation1();
+    } else if (curr_chart == 4) {
         create_chart_4(data);
-    } else if (curr_chart_num == 5) {
+    } else if (curr_chart == 44) {
+        create_chart_4(data);
+        chart4_annotation1();
+    }  else if (curr_chart == 5) {
         create_chart_5(data);
-    }
+    }  else if (curr_chart == 55) {
+        create_chart_5(data);
+        chart5_annotation1();
+    } 
 }
 
 async function init() {
     // create basic main annotations per chart
     const global_annotations = new Map();
-    global_annotations.set(1, "The following data is on a random sample of 10,000 hospital patients from across the United States of America in 2019.");
-    global_annotations.set(2, "The total distribution of patient sex.");
+    global_annotations.set(1, "The following data is on a random sample of 10,000 hospital patients from across the United States of America in 2019. Delve into the charts to begin analyzing the demographics of the patients and focus on the sex, age, and race.");
+    global_annotations.set(2, "The total distribution of patient biological sex for all ages combined.");
     global_annotations.set(3, "The chart below highlights the race distribution among the hospital patients throughout 2019.");
-    global_annotations.set(4, "Now that we know the patient demographics, begin analyzing patients with stroke appointments.");
-    global_annotations.set(5, "Now that we know the patient demographics, begin analyzing patients with stroke appointments.");
+    global_annotations.set(4, "Now that we know the patient demographics, begin analyzing patients with that were hospitalized with strokes with varying severity.");
+    global_annotations.set(5, "Race is another possible factor that needs to be analyzed with respect to strokes and how severe they are.");
+    global_annotations.set(6, "Conclusion: Although the analysis conducted on the graphs emphasizes that the sample selection of 10,000 patients is biased in favor of white patients, the closer distribution of sexes gives some insight into whether or not biological sex heavily influences the severity of a stroke. The evident outcome, however, is that older patients have a much higher risk of having a stroke. Biological sex played some factor in the severity, as more males had more severe hospitalization cases at younger ages. Again, to better conclude a racial analysis, the sample of patients needs equaler distribution of races for proper analysis.");
 
     setGlobalStatus("global_annotations", global_annotations);
     document.getElementById("global-annotation").innerText = getGlobalStatus("global_annotations").get(getGlobalStatus("chart_number"));

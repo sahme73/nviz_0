@@ -36,6 +36,7 @@ function create_chart_5(data) {
 
     // Draw space
     var g = svg.append("g")
+        .classed("base", true)
         .attr("transform", `translate(${margin.left},${margin.top})`);
     
     // Create the horizontal and vertical scales
@@ -249,4 +250,27 @@ function create_chart_5(data) {
         .attr("font-size", 14)
         .text("Other")
         .attr("transform", `translate(${35}, ${196})`);
+}
+
+function chart5_annotation1() {
+    const annotations = [
+        {
+            note: {
+                label: "here is the label",
+                title: "title this"
+            },
+            x: 100,
+            y: 100,
+            dy: 100,
+            dx: 100
+        }
+    ]
+    
+    const makeAnnotations = d3.annotation()
+        .annotations(annotations);
+
+    d3.select(".base")
+        .append("g")
+        .classed("annotation-group", true)
+        .call(makeAnnotations);
 }

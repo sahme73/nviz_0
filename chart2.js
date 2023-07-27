@@ -34,6 +34,7 @@ function create_chart_2(data) {
 
     //draw space
     var g = svg.append("g")
+        .classed("base", true)
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
     //graph
@@ -139,4 +140,35 @@ function create_chart_2(data) {
         .attr("font-size", 14)
         .text("Female")
         .attr("transform", `translate(${35}, ${56})`);
+}
+
+function chart2_annotation1() {
+    const annotations = [
+        {
+            note: {
+                label: "The patients are not distributed exactly evenly split based on biological sex; however, the distribution is relatively even for a random sample of patients."
+            },
+            x: 0,
+            y: -200,
+            dy: 20,
+            dx: -250
+        },
+        {
+            note: {
+                label: "The sample selection of patients does not include any hermaphrodites (individuals with two types of gonads)."
+            },
+            x: 730,
+            y: -270,
+            dy: 20,
+            dx: -150
+        }
+    ]
+    
+    const makeAnnotations = d3.annotation()
+        .annotations(annotations);
+
+    d3.select(".base")
+        .append("g")
+        .classed("annotation-group", true)
+        .call(makeAnnotations);
 }
