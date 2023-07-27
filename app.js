@@ -117,7 +117,7 @@ function update_chart() {
     } else if (curr_chart == 3) {
         create_chart_3(data);
     } else if (curr_chart == 33) {
-        create_chart_3(data);
+        create_chart_33(data);
         chart3_annotation1();
     } else if (curr_chart == 4) {
         create_chart_4(data);

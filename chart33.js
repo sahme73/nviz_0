@@ -1,7 +1,7 @@
 window.width = 0;
 window.height = 0;
 
-function create_chart_3(data) {
+function create_chart_33(data) {
     // Step 0: Calculate the percentage of race distrution based on month
 
     /**
@@ -88,11 +88,6 @@ function create_chart_3(data) {
         .classed("base", true)
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Add brushing
-    var brush = d3.brushX()
-        .extent([[0, 0], [width, height]])
-        .on("end", updateChart);
-
     //x and y scales
     var xScale = d3.scaleLinear()
         .domain([1, 12])
@@ -113,12 +108,11 @@ function create_chart_3(data) {
         .tickFormat(formatPercent);
 
     g.append("g")
-        .classed("xAxis", true)
+        .classed("tick", true)
         .attr("transform", `translate(0, ${height})`)
         .call(xAxis);
 
     g.append("g")
-        .classed("yAxis", true)
         .call(yAxis);
 
     //axes labels
@@ -250,7 +244,6 @@ function create_chart_3(data) {
     var animDuration = 5000;
     //race = 1
     g.append("path")
-        .classed("a", true)
         .datum(raceData1)
         .attr("fill", colorScale(1))
         .attr("fill-opacity", 0.3)
@@ -266,12 +259,10 @@ function create_chart_3(data) {
         .attr("stroke-width", 2)
         .on("end", function() {
             svg.attr("pointer-events", "all");
-            g.append("g").attr("class", "brush").call(brush);
         });
     
     //race = 2
     g.append("path")
-        .classed("a", true)
         .datum(raceData2)
         .attr("fill", colorScale(2))
         .attr("fill-opacity", 0.3)
@@ -288,7 +279,6 @@ function create_chart_3(data) {
 
     //race = 3
     g.append("path")
-        .classed("a", true)
         .datum(raceData3)
         .attr("fill", colorScale(3))
         .attr("fill-opacity", 0.3)
@@ -305,7 +295,6 @@ function create_chart_3(data) {
 
     //race = 4
     g.append("path")
-        .classed("a", true)
         .datum(raceData4)
         .attr("fill", colorScale(4))
         .attr("fill-opacity", 0.3)
@@ -322,7 +311,6 @@ function create_chart_3(data) {
 
     //race = 5
     g.append("path")
-        .classed("a", true)
         .datum(raceData5)
         .attr("fill", colorScale(5))
         .attr("fill-opacity", 0.3)
@@ -339,7 +327,6 @@ function create_chart_3(data) {
 
     //race = 6
     g.append("path")
-        .classed("a", true)
         .datum(raceData6)
         .attr("fill", colorScale(6))
         .attr("fill-opacity", 0.3)
@@ -353,6 +340,94 @@ function create_chart_3(data) {
         .attr("d", areaGenerator6)
         .attr("stroke", colorScale(6))
         .attr("stroke-width", 2);
+
+    // adding hovering tool-tips for each area
+
+    // tooltip
+    // inspired by: https://dataviz.unhcr.org/tools/d3/d3_stacked_column_100perc_chart.html | UNHCR
+    var tooltip = d3.select("body")
+        .append("div")
+        .style("display", "inline")
+        .style("position", "fixed")
+        .style("z-index", "10")
+        .style("visibility", "hidden")
+        .text("");
+
+    g.selectAll("path")
+        .on("mouseover", function(event, d) {
+            if (d != null) {
+                if (d[0].race == 1) {
+                    tooltip.html(`Race: White <br> Total: ${totals[parseInt(d[0].race)]} <br> Percentage: ${totals[parseInt(d[0].race)] / 100}%`);
+                } else if (d[0].race == 2) {
+                    tooltip.html(`Race: Black <br> Total: ${totals[parseInt(d[0].race)]} <br> Percentage: ${totals[parseInt(d[0].race)] / 100}%`);
+                } else if (d[0].race == 3) {
+                    tooltip.html(`Race: Hispanic <br> Total: ${totals[parseInt(d[0].race)]} <br> Percentage: ${totals[parseInt(d[0].race)] / 100}%`);
+                } else if (d[0].race == 4) {
+                    tooltip.html(`Race: Asian or Pacific Islander <br> Total: ${totals[parseInt(d[0].race)]} <br> Percentage: ${totals[parseInt(d[0].race)] / 100}%`);
+                } else if (d[0].race == 5) {
+                    tooltip.html(`Race: Native American <br> Total: ${totals[parseInt(d[0].race)]} <br> Percentage: ${totals[parseInt(d[0].race)] / 100}%`);
+                } else if (d[0].race == 6) {
+                    tooltip.html(`Race: Other <br> Total: ${totals[parseInt(d[0].race)]} <br> Percentage: ${totals[parseInt(d[0].race)] / 100}%`);
+                } 
+            }
+
+            tooltip
+            .style("visibility", "visible")
+            .style("top", (event.pageY - 64) + "px")
+            .style("left", (event.pageX) + "px");
+
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .attr("opacity", "100%")
+                .attr("filter", "saturate(200%");
+
+            d3.selectAll("path")
+                .filter((d_, i_) => {
+                    try {
+                        if (d_[0].race !== d[0].race) {
+                            return true;
+                        }
+                        return false;
+                    } catch (error) {
+                        return false
+                    }
+                })
+                .transition()
+                .duration(200)
+                .attr("opacity", "10%");
+        })
+        .on("mousemove", function(event, d) {
+            tooltip
+                .style("top", (event.pageY - 64) + "px")
+                .style("left", (event.pageX) + "px");
+        })
+        .on("mouseout", function(event, d) {
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .attr("opacity", "100%")
+                .attr("filter", "saturate(100%");
+
+            d3.selectAll("path")
+                .filter((d_, i_) => {
+                    try {
+                        if (d_[0].race !== d[0].race) {
+                            return true;
+                        }
+                        return false;
+                    } catch (error) {
+                        return false
+                    }
+                })
+                .transition()
+                .duration(200)
+                .attr("filter", "saturate(100%")
+                .attr("opacity", "100%");
+        })
+        .on("mouseleave", function(event, d) {
+            tooltip.style("visibility", "hidden");
+        });
 
     // set legend (done)
     var legend = svg.append("g")
@@ -455,100 +530,10 @@ function create_chart_3(data) {
         .text("Other")
         .attr("transform", `translate(${35}, ${196})`);
 
-    // Update the chart on boundaries
-    var idleTimeout;
-    function idled() { idleTimeout = null; }
-
-    function updateChart(event) {
-        console.log("zooming");
-        
-        // What are the selected boundaries?
-        console.log(event.selection);
-            
-        if (event.selection === null) {
-            if (!idleTimeout) return idleTimeout = setTimeout(idled, 350); // This allows to wait a little bit
-            xScale.domain([1, 12]);
-        } else {
-            g.select(".brush").call(brush.move, null); //remove grey box
-
-            var v1 = Math.floor(xScale.invert(event.selection[0]));
-            var v2 = Math.floor(xScale.invert(event.selection[1]));
-            console.log(v1);
-            console.log(v2);
-
-            xScale.domain([v1, v2]);
-            console.log(xScale.domain());
-            console.log(raceData6.slice(v1 - 1, v2));
-
-            // update axis and area position
-            g.select(".xAxis").transition().duration(1000).call(d3.axisBottom(xScale));
-            g.selectAll(".a").remove();
-
-            //race = 1
-            g.append("path")
-                .classed("a", true)
-                .datum(raceData1.slice(v1 - 1, v2))
-                .attr("d", areaGenerator1)
-                .attr("fill", colorScale(1))
-                .attr("fill-opacity", 0.3)
-                .attr("stroke", colorScale(1))
-                .attr("stroke-width", 2);    
-
-            //race = 2
-            g.append("path")
-                .classed("a", true)
-                .datum(raceData2.slice(v1 - 1, v2))
-                .attr("d", areaGenerator2)
-                .attr("fill", colorScale(2))
-                .attr("fill-opacity", 0.3)
-                .attr("stroke", colorScale(2))
-                .attr("stroke-width", 2);
-
-            //race = 3
-            g.append("path")
-                .classed("a", true)
-                .datum(raceData3.slice(v1 - 1, v2))
-                .attr("d", areaGenerator3)
-                .attr("fill", colorScale(3))
-                .attr("fill-opacity", 0.3)
-                .attr("stroke", colorScale(3))
-                .attr("stroke-width", 2);
-
-            //race = 4
-            g.append("path")
-                .classed("a", true)
-                .datum(raceData4.slice(v1 - 1, v2))
-                .attr("d", areaGenerator4)
-                .attr("fill", colorScale(4))
-                .attr("fill-opacity", 0.3)
-                .attr("stroke", colorScale(4))
-                .attr("stroke-width", 2);
-
-            //race = 5
-            g.append("path")
-                .classed("a", true)
-                .datum(raceData5.slice(v1 - 1, v2))
-                .attr("d", areaGenerator5)
-                .attr("fill", colorScale(5))
-                .attr("fill-opacity", 0.3)
-                .attr("stroke", colorScale(5))
-                .attr("stroke-width", 2);
-
-            //race = 6
-            g.append("path")
-                .classed("a", true)
-                .datum(raceData6.slice(v1 - 1, v2))
-                .attr("d", areaGenerator6)
-                .attr("fill", colorScale(6))
-                .attr("fill-opacity", 0.3)
-                .attr("stroke", colorScale(6))
-                .attr("stroke-width", 2);
-        }
-    }
-
     /**
      * @TODO
      * 
+     * Chart 4/5: add annotations
      * 
      * Essay: verify definition understanding and fully explain all details/features of the project
      */

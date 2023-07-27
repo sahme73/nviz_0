@@ -81,9 +81,8 @@ function create_chart_1(data) {
 
     // Add brushing
     var brush = d3.brushX()
-    .extent([[0, 0], [width, height]])
-    .on("end", updateChart);
-
+        .extent([[0, 0], [width, height]])
+        .on("end", updateChart);
     g.append("g").attr("class", "brush").call(brush);
 
     // Step 6: Add bars to chart based on age data
