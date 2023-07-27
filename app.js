@@ -107,7 +107,7 @@ function update_chart() {
     if (curr_chart == 1) {
         create_chart_1(data);
     } else if (curr_chart == 11) {
-        create_chart_1(data);
+        create_chart_11(data);
         chart1_annotation1();
     } else if (curr_chart == 2) {
         create_chart_2(data);
