@@ -164,7 +164,7 @@ function create_chart_5(data) {
         .classed("legend", true)
         .attr("width", 150)
         .attr("height", 250)
-        .style("fill", "white")
+        .style("fill", "none")
         .style("stroke", "black");
 
     // 1

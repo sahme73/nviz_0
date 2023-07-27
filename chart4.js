@@ -156,7 +156,7 @@ function create_chart_4(data) {
         .classed("legend", true)
         .attr("width", 150)
         .attr("height", 100)
-        .style("fill", "white") // adjust
+        .style("fill", "none")
         .style("stroke", "black");
 
     legend
