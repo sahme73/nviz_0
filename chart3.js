@@ -543,11 +543,6 @@ function create_chart_3(data) {
                 .attr("fill-opacity", 0.3)
                 .attr("stroke", colorScale(6))
                 .attr("stroke-width", 2);
-
-            var brushR = d3.brushX()
-                .extent([[0, 0], [width, height]])
-                .on("end", updateChart);
-            g.append("g").attr("class", "brush").call(brushR);
         }
     }
 }
