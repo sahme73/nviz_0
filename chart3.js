@@ -404,7 +404,7 @@ function create_chart_3(data) {
 
     legend
         .append("text")
-        .attr("font-size", 14)
+        .attr("font-size", 14)F
         .text("Hispanic")
         .attr("transform", `translate(${35}, ${86})`);
 
@@ -543,15 +543,10 @@ function create_chart_3(data) {
                 .attr("fill-opacity", 0.3)
                 .attr("stroke", colorScale(6))
                 .attr("stroke-width", 2);
+
+            g.append("g").attr("class", "brush").call(brush);
         }
     }
-
-    /**
-     * @TODO
-     * 
-     * 
-     * Essay: verify definition understanding and fully explain all details/features of the project
-     */
 }
 
 function chart3_annotation1() {
