@@ -135,7 +135,7 @@ function update_chart() {
 async function init() {
     // create basic main annotations per chart
     const global_annotations = new Map();
-    global_annotations.set(1, "The following data is on a random sample of 10,000 hospital patients from across the United States of America in 2019. Delve into the charts to begin analyzing the demographics of the patients and focus on the sex, age, and race.");
+    global_annotations.set(1, "The following data is on a random sample of 10,000 general hospital patients from across the United States of America in 2019. Delve into the charts to begin analyzing the demographics of the patients and focus on the sex, age, and race. A subset of these patients had strokes.");
     global_annotations.set(2, "The total distribution of patient biological sex for all ages combined.");
     global_annotations.set(3, "The chart below highlights the race distribution among the hospital patients throughout 2019.");
     global_annotations.set(4, "Now that we know the patient demographics, begin analyzing patients with that were hospitalized with strokes with varying severity.");
