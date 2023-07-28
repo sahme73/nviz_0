@@ -544,7 +544,10 @@ function create_chart_3(data) {
                 .attr("stroke", colorScale(6))
                 .attr("stroke-width", 2);
 
-            g.append("g").attr("class", "brush").call(brush);
+            var brushR = d3.brushX()
+                .extent([[0, 0], [width, height]])
+                .on("end", updateChart);
+            g.append("g").attr("class", "brush").call(brushR);
         }
     }
 }
