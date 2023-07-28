@@ -404,7 +404,7 @@ function create_chart_3(data) {
 
     legend
         .append("text")
-        .attr("font-size", 14)F
+        .attr("font-size", 14)
         .text("Hispanic")
         .attr("transform", `translate(${35}, ${86})`);
 
